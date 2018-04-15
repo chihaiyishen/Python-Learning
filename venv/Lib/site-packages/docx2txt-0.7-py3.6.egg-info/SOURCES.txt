@@ -1,0 +1,8 @@
+setup.cfg
+bin/docx2txt
+docx2txt/__init__.py
+docx2txt/docx2txt.py
+docx2txt.egg-info/PKG-INFO
+docx2txt.egg-info/SOURCES.txt
+docx2txt.egg-info/dependency_links.txt
+docx2txt.egg-info/top_level.txt

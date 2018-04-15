@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: docx2txt
+Version: 0.7
+Summary: A pure python-based utility to extract text and images from docx files.
+Home-page: https://github.com/ankushshah89/python-docx2txt
+Author: Ankush Shah
+Author-email: ankush.shah.nitk@gmail.com
+License: UNKNOWN
+Download-URL: https://github.com/ankushshah89/python-docx2txt/tarball/0.7
+Description: UNKNOWN
+Keywords: python,docx,text,images,extract
+Platform: UNKNOWN
