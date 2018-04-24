@@ -1,2 +1,11 @@
-# -Python
-这里是痴海「从零开始学 Python」教程系列，主要记录自己学习 python 的过程。周一至周五每天更新。
+# Python 学习之路
+
+这里是「痴海」python 教程，记录自己学习 python 的过程。
+
+目前已学习的内容
+
+- python 从零开始
+
+- python 算法
+
+- python 项目

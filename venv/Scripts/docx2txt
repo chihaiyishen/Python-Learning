@@ -1,9 +1,0 @@
-#!G:\python基础练习\四六级单词统计\venv\Scripts\python.exe
-
-import docx2txt
-
-if __name__ == '__main__':
-    import sys
-    args = docx2txt.process_args()
-    text = docx2txt.process(args.docx, args.img_dir)
-    sys.stdout.write(text.encode('utf-8'))
