@@ -26,6 +26,7 @@ def parse_friedns():
     itchat.login()
     text = dict()
     friedns = itchat.get_friends(update=True)[0:]
+    print(friedns)
     male = "male"
     female = "female"
     other = "other"
