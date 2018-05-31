@@ -1,34 +1,65 @@
-import re
 import requests
+from urllib.parse import urlencode
+import re
+import csv
+import time
 
-
-def page_one(url):
-
+# 获取网页请求数据
+def get_one(num):
+    headers = {
+        'User - Agent': 'Mozilla / 5.0(Windows NT 10.0;WOW64) AppleWebKit / 537.36(KHTML, likeGecko) Chrome / 66.0.3359.170Safari / 537.36'
+    }
+    params = {
+        'start': str(num),
+        'limit': '20',
+        'sort': 'new_score',
+        'status': 'P',
+        'percent_type': ''
+    }
+    base_url = 'https://movie.douban.com/subject/27113517/comments?'
+    url = base_url + urlencode(params)
+    print("正在采集：" + url)
     try:
-        reponse = requests.get(url)
-        if reponse.status_code == 200:
-            return reponse.text
-    except requests.ConnectionError:
-        return "爬取失败"
+        response = requests.get(url, headers=headers, timeout=10)
+        if response.status_code == 200:
+            return response.text
+    except EOFError as e:
+        print(e)
+        return None
 
-def parse_detial(html):
-    patten = re.compile('<div.*?comments".*?comment-item".*?<p class="">([\s\S]*?)</p>.*?</div>', re.S)
-    results = re.findall(patten, html)
-    for result in results:
-        yield {
-            'fileReview': result
-        }
+# 解析网页结构
+def parse_page(html):
+    info = []
+    patten1 = re.compile(r'<div class="comment">.*?<a href=.*?class="">(.*?)</a>.*?<span class="comment-time " title="(.*?)">.*?</span>.*?<p class="">(.*?)</p>.*?</div>', re.S)
+    datas = re.findall(patten1, html)
+    for data in datas:
+        comic = {}
+        comic['User'] = data[0].strip()
+        comic['Time'] = data[1].strip()
+        comic['Comment'] = data[2].strip().split()
+        info.append(comic)
+    return info
 
+# 保存数据
+def write_to_file(info):
+    with open('《铁血观音》影评.csv', 'a', newline='') as f:
+        fieldnames = ['User', 'Time', 'Comment']
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        try:
+            writer.writerows(info)
+        except:
+            pass
+
+# 执行函数
 def main():
-    target = 'https://movie.douban.com/subject/26683723/comments?start=p'
-    supple_url = 'https://movie.douban.com/subject/26683723/comments'
-    login_url = 'https://accounts.douban.com/login'
-    sum_pattern = ''
-    url = "https://movie.douban.com/subject/26683723/comments?start=0&limit=20&sort=new_score&status=P&percent_type="
-    html = page_one(url)
-    for review in parse_detial(html):
-        print(review)
-
+    for i in range(10):
+        html = get_one(i*20)
+        datas = parse_page(html)
+        write_to_file(datas)
+        print('本页采集完毕。')  # 采集完一页后的标识
+        time.sleep(1)  # 采集完一页休息一秒
 
 if __name__ == '__main__':
     main()
+
