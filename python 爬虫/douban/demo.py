@@ -30,7 +30,7 @@ def get_one(num):
 # 解析网页结构
 def parse_page(html):
     info = []
-    patten1 = re.compile(r'<div class="comment">.*?<a href=.*?class="">(.*?)</a>.*?<span class="comment-time " title="(.*?)">.*?</span>.*?<p class="">(.*?)</p>.*?</div>', re.S)
+    patten1 = re.compile(r'<div class="comment">.*?<a href=.*?class="">(.*?)</a>.*?<span class="comment-time " title="(.*?)">.*?</span>.*?<p class="">.*?<span class="short">(.*?)</span>.*?</p>.*?</div>', re.S)
     datas = re.findall(patten1, html)
     for data in datas:
         comic = {}
